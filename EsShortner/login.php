@@ -1,6 +1,6 @@
 <?php
 // Import funzioni
-require("dbUtils.php");
+include_once "dbUtils.php";
 
 // Start the session
 session_start();

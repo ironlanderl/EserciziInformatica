@@ -1,5 +1,5 @@
 <?php
-require("dbUtils.php");
+include_once "dbUtils.php";
 
 if ($_GET){
     $url = $_GET["a"];
