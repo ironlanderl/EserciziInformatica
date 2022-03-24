@@ -13,7 +13,7 @@ if (!$_SESSION) {
 }
 
 // Controllo per post
-if ($_POST){
+if ($_POST) {
     $conn = connetti();
 
     // Estraggo l'url
@@ -22,10 +22,9 @@ if ($_POST){
     $user = $_SESSION["user"];
 
     // Se l'url non è valido avverto l'utente ed interrompo l'esecuzione
-    if (filter_var($url, FILTER_VALIDATE_URL) === false){
+    if (filter_var($url, FILTER_VALIDATE_URL) === false) {
         http_response_code(400);
         echo "URL INVALIDO";
-
     }
 
     // Calcolo un codice casuale
@@ -34,7 +33,7 @@ if ($_POST){
     $q = "SELECT * FROM urls WHERE shorter = '" . $shorter . "'";
     $result = mysqli_query($conn, $q);
     // Loop per controllare se esiste già un url accorciato
-    while (mysqli_num_rows($result) > 0){
+    while (mysqli_num_rows($result) > 0) {
         // Calcolo un nuovo codice casuale
         $shorter = randomString(10);
         // Controllo se esiste
@@ -44,15 +43,12 @@ if ($_POST){
     // Inserisco il nuovo url
     $q = "INSERT INTO urls (original, shorter, insertedby) VALUES ('" . $url . "', '" . $shorter . "', '" . $user . "')";
 
-    if (!mysqli_query($conn, $q)){
+    if (!mysqli_query($conn, $q)) {
         http_response_code(400);
         die("Error: " . $sql . "<br>" . mysqli_error($conn));
     }
     http_response_code(201);
     disconnetti($conn);
-    
-    
-
 }
 
 
@@ -60,10 +56,11 @@ if ($_POST){
 
 
 
-function randomString(int $lenght){
+function randomString(int $lenght)
+{
     $chars = array_merge(range('A', 'Z'), range('a', 'z'), range(0, 9));
     $string = "";
-    for ($i = 0; $i < $lenght; $i++){
+    for ($i = 0; $i < $lenght; $i++) {
         $rng = random_int(0, count($chars));
         $string = $string . $chars[$rng];
     }
@@ -96,6 +93,26 @@ function randomString(int $lenght){
 <body>
 
     <div class="container">
+        <!-------------------------------------------------->
+        <header class="p-3 mb-3 border-bottom">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start pr-3">
+
+                <ul class="nav nav-pills col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 ml-3">
+
+                    <li class="nav-item"><a href="index.php" class="nav-link active" aria-current="page">Home</a></li>
+                </ul>
+
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Logged in as <?php echo $_SESSION["user"]; ?>
+                    </a>
+                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item" href="logout.php">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <!-------------------------------------------------->
         <form onclick="<?php echo $_SERVER["PHP_SELF"] ?>" onsubmit="return validateForm()" name="shortener" method="POST">
             <div class="input-group mb-3 mt-3">
                 <input type="text" class="form-control" placeholder="Url da accorciare" aria-label="Url da accorciare" aria-describedby="basic-addon2" required name="url">
@@ -124,7 +141,7 @@ function randomString(int $lenght){
                 $result = mysqli_query($conn, $q);
 
                 // stampo
-                while($row = mysqli_fetch_assoc($result)) {
+                while ($row = mysqli_fetch_assoc($result)) {
                     $urlo = $row["original"];
                     $urls = "http://localhost/Esercizi/EsShortner/r.php?a=" . $row["shorter"];
                     echo "<tr>";
