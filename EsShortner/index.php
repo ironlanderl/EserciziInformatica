@@ -21,6 +21,13 @@ if ($_POST){
     // Estraggo il nome utente
     $user = $_SESSION["user"];
 
+    // Se l'url non è valido avverto l'utente ed interrompo l'esecuzione
+    if (filter_var($url, FILTER_VALIDATE_URL) === false){
+        http_response_code(400);
+        echo "URL INVALIDO";
+
+    }
+
     // Calcolo un codice casuale
     $shorter = randomString(10);
     // Controllo se esiste
@@ -38,9 +45,10 @@ if ($_POST){
     $q = "INSERT INTO urls (original, shorter, insertedby) VALUES ('" . $url . "', '" . $shorter . "', '" . $user . "')";
 
     if (!mysqli_query($conn, $q)){
+        http_response_code(400);
         die("Error: " . $sql . "<br>" . mysqli_error($conn));
     }
-
+    http_response_code(201);
     disconnetti($conn);
     
     
@@ -110,7 +118,7 @@ function randomString(int $lenght){
                 $username = $_SESSION["user"];
 
                 // Query per prendere gli url inseriti dall'utente
-                $q = "SELECT * FROM urls WHERE insertedby = '" . $username . "'";
+                $q = "SELECT * FROM urls WHERE insertedby = '" . $username . "' ORDER BY visits DESC;";
 
                 // eseguo
                 $result = mysqli_query($conn, $q);
@@ -120,7 +128,7 @@ function randomString(int $lenght){
                     $urlo = $row["original"];
                     $urls = "http://localhost/Esercizi/EsShortner/r.php?a=" . $row["shorter"];
                     echo "<tr>";
-                    echo "<td><a href='" . $urlo . "'>" . $urlo . "</a></td>";
+                    echo "<td><a href='" . $urlo . "'>" . mb_strimwidth($urlo, 0, 50) . "</a></td>";
                     echo "<td><a href='" . $urls . "'>" . $urls . "</a></td>";
                     echo "<td>" . $row["visits"] . "</td>";
                     echo "</tr>";

@@ -28,19 +28,22 @@ if ($_SESSION){
         
         /**********************************/
 
-        // Calcolo l'hash della password
-        $hashPass = md5($password);
-
-        $query = "SELECT * FROM users WHERE username = '" . htmlspecialchars($username) . "' AND password = '" . $hashPass . "';";
+        // Scarico la password hashata
+        $query = "SELECT * FROM users WHERE username = '" . strip_tags(htmlspecialchars($username) . "'");
         $result = mysqli_query($conn, $query);
 
         disconnetti($conn);
 
-        if (mysqli_num_rows($result) > 0){
-            // È presente un elemento 
-            $_SESSION["user"] = $username;
-            header("Location: index.php");
-            return;
+        if ($result->num_rows > 0){
+            // È presente un elemento
+            // Estraggo la password
+            $hashpass = $result->fetch_assoc()["password"];
+            // Controllo se la password è giusta
+            if (password_verify($password, $hashpass) == 1){
+                $_SESSION["user"] = $username;
+                header("Location: index.php");
+                return;
+            }
         }
         echo "Nome utente o password errati";
         

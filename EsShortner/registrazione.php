@@ -58,7 +58,7 @@ if ($_SESSION) {
         $conn = connetti();
 
         // Calcolo l'hash della password
-        $hashPass = md5($password);
+        $hashPass = password_hash($password, PASSWORD_BCRYPT);
 
         $query = "INSERT INTO users VALUES ('" . htmlspecialchars($username) . "', '" . $hashPass . "');";
 
