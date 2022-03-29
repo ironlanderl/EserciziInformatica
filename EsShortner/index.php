@@ -73,21 +73,6 @@ function randomString(int $lenght)
 <html>
 
 <head>
-    <script>
-        function validateForm() {
-            let x = document.forms["shortener"]["url"].value;
-            let url;
-
-            try {
-                url = new URL(x);
-            } catch (_) {
-                alert("URL NON VALIDO");
-                return false;
-            }
-
-            return true;
-        }
-    </script>
 </head>
 
 <body>
@@ -113,9 +98,9 @@ function randomString(int $lenght)
             </div>
         </header>
         <!-------------------------------------------------->
-        <form onclick="<?php echo $_SERVER["PHP_SELF"] ?>" onsubmit="return validateForm()" name="shortener" method="POST">
+        <form onclick="<?php echo $_SERVER["PHP_SELF"] ?>" name="shortener" method="POST">
             <div class="input-group mb-3 mt-3">
-                <input type="text" class="form-control" placeholder="Url da accorciare" aria-label="Url da accorciare" aria-describedby="basic-addon2" required name="url">
+                <input type="url" class="form-control" placeholder="Url da accorciare" aria-label="Url da accorciare" aria-describedby="basic-addon2" required name="url">
                 <button type="submit" class="btn btn-primary">Inserisci</button>
             </div>
         </form>
@@ -126,6 +111,7 @@ function randomString(int $lenght)
                     <th scope="col">Url Originale</th>
                     <th scope="col">Url Corto</th>
                     <th scope="col">Visite</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
 
@@ -138,16 +124,26 @@ function randomString(int $lenght)
                 $q = "SELECT * FROM urls WHERE insertedby = '" . $username . "' ORDER BY visits DESC;";
 
                 // eseguo
-                $result = mysqli_query($conn, $q);
+                $result = $conn->query($q);
 
                 // stampo
                 while ($row = mysqli_fetch_assoc($result)) {
+                    $urloLenght = strlen($row["original"]);
                     $urlo = $row["original"];
-                    $urls = "http://localhost/Esercizi/EsShortner/r.php?a=" . $row["shorter"];
+                    $urls = "http://localhost/Esercizi/EsShortner/r?a=" . $row["shorter"];
+                    $urld = "http://localhost/Esercizi/EsShortner/delete.php?a=" . $row["shorter"];
                     echo "<tr>";
-                    echo "<td><a href='" . $urlo . "'>" . mb_strimwidth($urlo, 0, 50) . "</a></td>";
-                    echo "<td><a href='" . $urls . "'>" . $urls . "</a></td>";
+                    // Se l'url originale è più lungo di 50 caratteri lo tronco
+                    if ($urloLenght > 50){
+                        echo "<td><a href={$urlo}>" . mb_strimwidth($urlo, 0, 50) . "...</a></td>";
+                    }
+                    else{
+                        echo "<td><a href={$urlo}>{$urlo}</a></td>";
+                    }
+                    
+                    echo "<td><a href={$urls}>{$urls}</a></td>";
                     echo "<td>" . $row["visits"] . "</td>";
+                    echo "<td><a class='btn btn-danger' href='{$urld}'>Elimina</a></td>";
                     echo "</tr>";
                 }
 
