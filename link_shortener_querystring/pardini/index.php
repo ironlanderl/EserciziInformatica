@@ -130,8 +130,8 @@ function randomString(int $lenght)
                 while ($row = mysqli_fetch_assoc($result)) {
                     $urloLenght = strlen($row["original"]);
                     $urlo = $row["original"];
-                    $urls = "http://localhost/Esercizi/EsShortner/r?a=" . $row["shorter"];
-                    $urld = "http://localhost/Esercizi/EsShortner/delete.php?a=" . $row["shorter"];
+                    $urls = "r?a=" . $row["shorter"];
+                    $urld = "delete.php?a=" . $row["shorter"];
                     echo "<tr>";
                     // Se l'url originale è più lungo di 50 caratteri lo tronco
                     if ($urloLenght > 50){

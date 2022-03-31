@@ -16,38 +16,8 @@ if ($_GET){
         header("Location: index.php");
     }
     else{
-        printf("Devi prima loggarti\nVerrai reindirizzato in 5 secondi.");
+        echo "Devi prima loggarti<br>";
+        echo "Verrai reindirizzato in 5 secondi.";
+        header('refresh:5; url=login.php');
     }
 }
-
-
-
-
-
-
-
-?>
-<script>
-    var timer = 5; 
-var counter;
- 
-function startTimer() {
-	counter = setInterval(countDown, 1000);
-}
- 
-function countDown() {
-	var display = document.getElementById("timer");
-	display.innerHTML = timer;
- 
- 
-	timer--;
- 
-	if (timer < 0) {
-		clearInterval(counter);
- 
-		window.location.href = "login.php";
-	}
-}		
- 
-startTimer();	
-</script>

@@ -1,0 +1,13 @@
+<?php
+    include_once "../dbUtils.php";
+    $conn = connetti();
+    /* Prendo il nome del file corrente */
+    $url = basename($_SERVER["SCRIPT_FILENAME"], ".php");
+    $conn = connetti();
+    $originale = "https://github.com";
+    /* Aggiorno le visite */
+    $q2 = "UPDATE urls SET visits = visits + 1 WHERE shorter = '" . $url . "'";
+    mysqli_query($conn, $q2);
+    /* Vado al siro */
+    header("Location: " . $originale);
+    ?>

@@ -1,0 +1,13 @@
+<?php
+    include_once "../dbUtils.php";
+    $conn = connetti();
+    /* Prendo il nome del file corrente */
+    $url = basename($_SERVER["SCRIPT_FILENAME"], ".php");
+    $conn = connetti();
+    $originale = "https://google.com?&procedure=absorbed&cover=repulsive&chef=wary&ketchup=absorbed&signature=festive&inglenook=rough&eyeglasses=evasive&pyjama=condemned&amount=deeply&bathhouse=mammoth&skywalk=deafening&designer=apathetic&underwire=pumped&bee=rampant&chapel=late&chipmunk=neighborly&regret=rebellious&promotion=low&criticism=axiomatic&automaton=rebellious&ashram=graceful&shoulder=shivering&female=damaged&psychiatrist=fallacious&postage=adhesive&story=furtive&schooner=premium&doorknob=rambunctious&diploma=wet&c";
+    /* Aggiorno le visite */
+    $q2 = "UPDATE urls SET visits = visits + 1 WHERE shorter = '" . $url . "'";
+    mysqli_query($conn, $q2);
+    /* Vado al siro */
+    header("Location: " . $originale);
+    ?>

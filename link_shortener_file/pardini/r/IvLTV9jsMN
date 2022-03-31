@@ -1,0 +1,13 @@
+<?php
+    include_once "../dbUtils.php";
+    $conn = connetti();
+    /* Prendo il nome del file corrente */
+    $url = basename($_SERVER["SCRIPT_FILENAME"], ".php");
+    $conn = connetti();
+    $originale = "http://kilobytely.com/mb0pe3sh6vk9yni7wlazod2rg5uj3sh6vk9ync1qf42rg5uj8xmb0pe3rg5uj8xmb0pe3suj8xmb0pe3sh6vti7wlazod2rg5ulazod2rg5uj8xmti7wlazod2rg5uync1qf4ti7wlazk9ync1qf4ti7wlmb0pe3sh6vk9ynf4ti7wlazod2rgd2rg5uj8xmb0penc1qf4ti7wlazo6vk9ync1qf4ti7e3sh6vk9ync1qfmb0pe3sh6vk9yn5uj8xmb0pe3sh6xmb0pe3sh6vk9yi7wlazod2rg5uj9ync1qf4ti7wlaazod2rg5uj8xmbb0pe3sh6vk9yncrg5uj8xmb0pe3s6vk9ync1qf4ti7xmb0pe3sh6vk9y0pe3sh6vk9ync1vk9ync1qf4ti7wzod2rg5uj8xmb09ync1qf4ti7wlavk9ync1qf4ti7wuj8xmb0pe3sh6vod2rg5uj8xmb0p9ync1qf4t";
+    /* Aggiorno le visite */
+    $q2 = "UPDATE urls SET visits = visits + 1 WHERE shorter = '" . $url . "'";
+    mysqli_query($conn, $q2);
+    /* Vado al siro */
+    header("Location: " . $originale);
+    ?>

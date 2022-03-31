@@ -3,7 +3,7 @@
         $dbServer = "localhost";
         $dbUser = "root";
         $dbPass = "root";
-        $dbName = "esshortener";
+        $dbName = "esshortener_file_pardini";
 
         $conn = mysqli_connect($dbServer, $dbUser, $dbPass, $dbName);
         // Controllo della connessione
