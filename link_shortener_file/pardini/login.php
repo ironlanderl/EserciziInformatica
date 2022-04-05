@@ -6,7 +6,7 @@ include_once "dbUtils.php";
 session_start();
 
 //Check if logged in
-if ($_SESSION){
+if ($_SESSION) {
     // Redirect
     header("Location: index.php");
 }
@@ -25,7 +25,7 @@ if ($_SESSION){
 
         /* Parte del login al DB */
         $conn = connetti();
-        
+
         /**********************************/
 
         // Scarico la password hashata
@@ -34,24 +34,29 @@ if ($_SESSION){
 
         disconnetti($conn);
 
-        if ($result->num_rows > 0){
+        if ($result->num_rows > 0) {
             // È presente un elemento
             // Estraggo la password
             $hashpass = $result->fetch_assoc()["password"];
             // Controllo se la password è giusta
-            if (password_verify($password, $hashpass) == 1){
+            if (password_verify($password, $hashpass) == 1) {
                 $_SESSION["user"] = $username;
                 header("Location: index.php");
                 return;
             }
         }
         echo "Nome utente o password errati";
-        
     }
 
     StampaForm();
+    // Stampo il warning per ricordare l'utente di modificare il file
+    echo '
+        <div class="alert alert-danger fade show container">
+            <strong>Attenzione! </strong> Ricordarsi di modificare il file .htaccess presente nella root.
+        </div>
+        ';
 
-    
+
     function StampaForm()
     {
         echo
