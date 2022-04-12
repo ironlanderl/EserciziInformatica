@@ -51,12 +51,6 @@ if ($_SESSION){
     }
 
     StampaForm();
-    // Stampo il warning per ricordare l'utente di modificare il file
-    echo '
-    <div class="alert alert-danger fade show container">
-        <strong>Attenzione! </strong> Ricordarsi di modificare il file .htaccess presente nella root.
-    </div>
-    ';
 
     
     function StampaForm()
