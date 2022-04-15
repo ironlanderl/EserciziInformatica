@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Creato il: Apr 05, 2022 alle 08:58
--- Versione del server: 8.0.23
--- Versione PHP: 8.0.3
+-- Creato il: Apr 15, 2022 alle 09:25
+-- Versione del server: 8.0.18
+-- Versione PHP: 7.4.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `esshortener_querystring_pardini`
 --
+CREATE DATABASE IF NOT EXISTS `esshortener_querystring_pardini` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `esshortener_querystring_pardini`;
 
 -- --------------------------------------------------------
 
@@ -27,10 +29,11 @@ SET time_zone = "+00:00";
 -- Struttura della tabella `urls`
 --
 
+DROP TABLE IF EXISTS `urls`;
 CREATE TABLE `urls` (
   `original` varchar(512) NOT NULL,
   `shorter` varchar(32) NOT NULL,
-  `visits` int UNSIGNED DEFAULT '0',
+  `visits` int(10) UNSIGNED DEFAULT '0',
   `insertedby` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -53,6 +56,7 @@ INSERT INTO `urls` (`original`, `shorter`, `visits`, `insertedby`) VALUES
 -- Struttura della tabella `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `username` varchar(20) NOT NULL,
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL

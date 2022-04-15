@@ -11,6 +11,9 @@ if ($_SESSION) {
     header("Location: index.php");
 }
 
+// Errore di default è falso
+$errore = false;
+
 // Controllo se è presente una richiesta post
 if ($_POST) {
     // Prendo il nome utente e password dalla richiesta
