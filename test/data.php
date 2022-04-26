@@ -1,0 +1,19 @@
+<?php
+
+/*array(2) { ["credential"]=> string(1193) "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg2MTY0OWU0NTAzMTUzODNmNmI5ZDUxMGI3Y2Q0ZTkyMjZjM2NkODgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJuYmYiOjE2NTA5NTgxNDMsImF1ZCI6IjY4OTY1MTcwNTUxMy0ycThwbXMzbXVzbHQzOTQ3OGM5a25mbDdhYjQ2MDZoaS5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwNjkyMDAwNjIxMDQ1NDE5NzY2NyIsImVtYWlsIjoiZmFicml6aW8uMDNwQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhenAiOiI2ODk2NTE3MDU1MTMtMnE4cG1zM211c2x0Mzk0NzhjOWtuZmw3YWI0NjA2aGkuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJuYW1lIjoiRmFicml6aW8gUGFyZGluaSIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS0vQU9oMTRHaVZrdlh6X3NhOVdXS1YyV0R4ZXRtV0tXOS12YW4wajlzU2Q0bmMzUT1zOTYtYyIsImdpdmVuX25hbWUiOiJGYWJyaXppbyIsImZhbWlseV9uYW1lIjoiUGFyZGluaSIsImlhdCI6MTY1MDk1ODQ0MywiZXhwIjoxNjUwOTYyMDQzLCJqdGkiOiI5YWU1ZTg2YTNiMzQ0NDcyODNmYTlmYjQ0NmMwYzkwYjA2NWY5MTRjIn0.NSVP9XWn5gkvZvpDz09KRAQaIJFOh39iFBBLfj7yG19v_z9yEL_4J6IJHF60eTpdiXBnPVL0tPJFeg5q57INu0zAq6FWVRnnGw6gVAKryEsX4D3lMOrDtnZIvRcdohk_a7fUGx5XP6u3CdWstn6CvfGsrGIocPYCpBtL7mYmBhJmUqIhKuTUlNoEw7Ptu1E41IIBJCPmIB55Escna4fNRDawNeyCtVtEiGET4PValksyx098fyoXj95vAUX6CrNezYtmjSWnxxEGaEhoOGRjuNYse5OralvSXB-4aTWXv5CZRmGQ_NP9jO0Nnn2o0ZXjn70fvbJ9WrBP5rWnX4JH-g" ["g_csrf_token"]=> string(16) "3000a6da7b84dfbb" } */
+
+$CLIENT_ID = "689651705513-2q8pms3muslt39478c9knfl7ab4606hi.apps.googleusercontent.com";
+
+include_once "lib/google/vendor/autoload.php";
+
+// Get $id_token via HTTPS POST.
+$id_token = $_POST["credentials"];
+
+$client = new Google_Client(['client_id' => $CLIENT_ID]);  // Specify the CLIENT_ID of the app that accesses the backend
+$payload = $client->verifyIdToken($id_token);
+if ($payload) {
+  $userid = $payload['sub'];
+  echo "YEPP";
+} else {
+  echo "NOPE";
+}
